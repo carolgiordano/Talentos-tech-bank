@@ -82,11 +82,9 @@ public class exercicíos {
         Scanner in = new Scanner(System.in);
 
         System.out.println("Digite o primeiro número");
-        validaSystemInteiro(in);
         int primeiroNumero = in.nextInt();
 
         System.out.println("Digite o segundo número");
-        validaSystemInteiro(in);
         int segundoNumero = in.nextInt();
 
         if (primeiroNumero == segundoNumero) {
@@ -265,15 +263,12 @@ public class exercicíos {
         Scanner in = new Scanner(System.in);
 
         System.out.println("Digite a operação que deseja fazer (a, s, m, d)");
-        validaSystemInString(in);
         char operacao = in.next().charAt(0);
 
         System.out.println("Digite o primeiro valor");
-        validaSystemInDouble(in);
         double valor1 = in.nextDouble();
 
         System.out.println("Digite o segundo valor");
-        validaSystemInDouble(in);
         double valor2 = in.nextDouble();
 
 
