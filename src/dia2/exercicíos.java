@@ -4,6 +4,22 @@ import java.util.Scanner;
 
 public class exercicíos {
 
+    public static void validaSystemInteiro (Scanner in) {
+        if (!in.hasNext()) {
+            System.out.println("VocÊ precisa digitar um número inteiro");
+            in.close();
+            System.exit(1);
+        }
+    }
+
+    public static void validaSystemInDouble(Scanner in) {
+        if (!in.hasNextDouble()) {
+            System.out.println("Você precisa digitar um número real");
+            in.close();
+            System.exit(1);
+        }
+    }
+
     public static void exercicíos1() {
         //Escreva um algoritmo que leia um número inteiro e diga se ele é par ou ímpar.
 
@@ -82,9 +98,11 @@ public class exercicíos {
         Scanner in = new Scanner(System.in);
 
         System.out.println("Digite o primeiro número");
+        validaSystemInteiro(in);
         int primeiroNumero = in.nextInt();
 
         System.out.println("Digite o segundo número");
+        validaSystemInteiro(in);
         int segundoNumero = in.nextInt();
 
         if (primeiroNumero == segundoNumero) {
@@ -263,12 +281,15 @@ public class exercicíos {
         Scanner in = new Scanner(System.in);
 
         System.out.println("Digite a operação que deseja fazer (a, s, m, d)");
+        validaSystemInDouble(in);
         char operacao = in.next().charAt(0);
 
         System.out.println("Digite o primeiro valor");
+        validaSystemInDouble(in);
         double valor1 = in.nextDouble();
 
         System.out.println("Digite o segundo valor");
+        validaSystemInDouble(in);
         double valor2 = in.nextDouble();
 
 
