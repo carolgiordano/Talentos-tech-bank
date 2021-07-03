@@ -1,4 +1,4 @@
-package dia1;
+package dia2;
 
 public class Revisão {
 
@@ -21,12 +21,12 @@ public class Revisão {
         int maiorInteiroB = 2147483647;
 
         int resultado = maiorInteiroA + maiorInteiroB;
-        System.out.println((resultado);
+        System.out.println(resultado);
 
         long resultLong = (long) maiorInteiroA + (long) maiorInteiroB;
         long resultLong3 = maiorInteiroA * 1L + maiorInteiroB * 1L;
         System.out.println(resultLong);
         System.out.println(resultLong3);
-        
+
     }
 }

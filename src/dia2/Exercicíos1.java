@@ -1,8 +1,8 @@
-package dia1;
+package dia2;
 
 import java.util.Scanner;
 
-public class Exercicíos {
+public class Exercicíos1 {
     public static void main(String[] args) {
         Exercicío4();
     }
