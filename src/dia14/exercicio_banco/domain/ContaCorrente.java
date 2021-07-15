@@ -4,8 +4,8 @@ public class ContaCorrente extends Conta{
 
     private double limite;
 
-    public ContaCorrente(String nome, double saldo) {
-        super(nome, saldo);
+    public ContaCorrente(String nome, double renda, double saldo) {
+        super(nome, renda, saldo);
         this.limite = 500.00;
     }
 
@@ -16,7 +16,7 @@ public class ContaCorrente extends Conta{
         if(limiteSaque >= valor) {
             verificarUsoChequeEspecial(valor);
             setSaldo(getSaldo()-valor);
-            adicionarLancamento(-valor);
+            adicionarLancamento(-valor, "saque");
 
             System.out.println("Saque realizado com sucesso!");
             return valor;
@@ -32,7 +32,7 @@ public class ContaCorrente extends Conta{
 
         if(limiteTransferencia >= valor){
             this.setSaldo(this.getSaldo()-valor);
-            this.adicionarLancamento(-valor);
+            this.adicionarLancamento(-valor, "transferência");
             conta.depositar(valor);
         }
     }
@@ -54,8 +54,8 @@ public class ContaCorrente extends Conta{
 
     public void verLimiteMaximo(){
         double limiteSaque = getSaldo() + this.limite;
-        System.out.println(String.format("Seu limite máximo é: %s", this.limite));
-        System.out.println(String.format("Você ainda pode gastar %s.", limiteSaque));
+        System.out.println(String.format("Seu limite máximo do cheque especial é: R$%s", this.limite));
+        System.out.println(String.format("Contando com o cheque especial, você pode gastar R$%s.", limiteSaque));
     }
 
     public double getValorDisponivel(){

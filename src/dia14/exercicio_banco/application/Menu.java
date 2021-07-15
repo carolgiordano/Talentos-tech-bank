@@ -21,7 +21,8 @@ public class Menu {
 
     public static void textoMenu(){
         System.out.println("\n------------------------------------------");
-        System.out.println(String.format("Olá, %s. Você está acessando a conta %s.\n", contaAtual.mostrarNomeCliente(), contaAtual.getNumero()));
+        System.out.println(String.format("Olá, %s. Você está acessando a conta %s.", contaAtual.mostrarNomeCliente(), contaAtual.getNumero()));
+        System.out.println(String.format("Seu saldo atual é: R$%s. \n", contaAtual.getSaldo()));
         System.out.println("O que deseja fazer? Selecione uma opção:");
         System.out.println(
                 "1) Criar e acessar outra conta\n" +
@@ -78,7 +79,7 @@ public class Menu {
                 alterarLimiteChequeEspecial(in);
                 break;
             case 7:
-                if(contaAtual instanceof ContaCorrente){
+                if(validarSeCorrente()){
                     ((ContaCorrente) contaAtual).verLimiteMaximo();
                 } else {
                     System.out.println("Contas do tipo Poupança não possuem limite.");
@@ -92,12 +93,12 @@ public class Menu {
                 break;
             case 10:
                 if(contaAtual.encerrar()) {
-                    System.out.println("Conta fechada.");
+                    System.out.println("Obrigado por usar o PetBank!");
                     System.exit(0);
                 }
                 break;
             default:
-                System.out.println("Vocë não digitou uma opção válida! Digite um valor válido.");
+                System.out.println("Você não digitou uma opção válida! Digite um valor válido.");
                 break;
         }
 
@@ -113,6 +114,11 @@ public class Menu {
         System.out.println("Digite o seu nome: ");
         String nome = in.next();
 
+        System.out.println("Digite sua renda mensal: ");
+        validaInputDouble(in);
+        double renda = in.nextDouble();
+        validaInputNegativo(renda);
+
         System.out.println("Digite o depósito inicial da sua conta: ");
         validaInputDouble(in);
         double depositoInicial = in.nextDouble();
@@ -125,12 +131,12 @@ public class Menu {
         int tipoDeConta = in.nextInt();
         do {
             if (tipoDeConta == 1) {
-                conta = new ContaPoupanca(nome, depositoInicial);
-                conta.adicionarLancamento(depositoInicial);
+                conta = new ContaPoupanca(nome, renda, depositoInicial);
+                conta.adicionarLancamento(depositoInicial, "depósito");
                 System.out.println("Conta Poupança criada com sucesso!");
             }else if(tipoDeConta == 2){
-                conta = new ContaCorrente(nome, depositoInicial);
-                conta.adicionarLancamento(depositoInicial);
+                conta = new ContaCorrente(nome, renda, depositoInicial);
+                conta.adicionarLancamento(depositoInicial, "depósito");
                 System.out.println("Conta Corrente criada com sucesso!");
             }else{
                 System.out.println("Digite 1) Conta Poupança ou 2) Conta Corrente:");
@@ -160,7 +166,7 @@ public class Menu {
     public static void listarExtrato(Scanner in){
         System.out.println("Deseja ver o extrato completo? Digite S ou N");
         String resposta = in.next();
-        if(resposta.equals("S")){
+        if(resposta.equalsIgnoreCase("S")){
             contaAtual.listarExtrato();
         }else{
             System.out.println("Deseja ver o extrato de (7, 15, 30, 60, 90) dias: ");
@@ -187,7 +193,7 @@ public class Menu {
         validaInputNegativo(valor);
 
         double saque = contaAtual.sacar(valor);
-        if(saque == 0 && contaAtual instanceof ContaCorrente){
+        if(saque == 0 && validarSeCorrente()){
             System.out.println("Deseja aumentar o seu limite do Cheque Especial? 1) Sim 2) Não");
             int resposta = in.nextInt();
             if(resposta == 1) alterarLimiteChequeEspecial(in);
@@ -195,7 +201,7 @@ public class Menu {
     }
 
     public static void alterarLimiteChequeEspecial(Scanner in){
-        if(contaAtual instanceof ContaCorrente){
+        if(validarSeCorrente()){
             System.out.println("Para alteração do limite da conta, é necessária a senha do Gerente.");
 
             System.out.println("Gerente, informe o novo valor de limite:");
@@ -243,5 +249,9 @@ public class Menu {
         validaInputNegativo(numeroDeParcelas);
 
         Emprestimo.simularEmprestimo(emprestimo, numeroDeParcelas);
+    }
+
+    public static boolean validarSeCorrente(){
+        return contaAtual.getTipoConta().equals(ContaCorrente.class.getSimpleName());
     }
 }
