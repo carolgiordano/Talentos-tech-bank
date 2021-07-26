@@ -1,4 +1,4 @@
-package sql;
+package dia19_sql;
 
 
 import java.sql.Connection;
